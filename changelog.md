@@ -1,3 +1,8 @@
+# v1.2.25-beta.1
+- support for GD version 2.2081
+- badges API support temporarily removed until it gets updated
+- click between frames is now always allowed for matches
+
 # 1.2.24
 - switched to using a new badges api (ty ery :D)
 

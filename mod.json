@@ -8,9 +8,9 @@
 	},
 	"id": "abb2k.gdwt",
 	"name": "GD World Tournament",
-	"version": "v1.2.25",
+	"version": "v1.2.25-beta.1",
 	"developer": "abb2k",
-	"description": "",
+	"description": "Allows GDWT players to join GDWT events",
 	"links": {
 		"community": "https://discord.gg/qxaBVVds6e"
 	},
