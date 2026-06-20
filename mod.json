@@ -1,5 +1,5 @@
 {
-	"geode": "5.6.1",
+	"geode": "5.7.1",
 	"gd": {
 		"win": "2.2081",
 		"android": "2.2081",
@@ -8,7 +8,7 @@
 	},
 	"id": "abb2k.gdwt",
 	"name": "GD World Tournament",
-	"version": "v1.2.27",
+	"version": "v1.2.28",
 	"developer": "abb2k",
 	"description": "Allows GDWT players to join GDWT events",
 	"links": {

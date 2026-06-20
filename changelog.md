@@ -1,3 +1,8 @@
+# v1.2.28
+- fixed crash on game launch
+- fixed crash on menu opening
+- fixed match join issues
+
 # v1.2.27
 - added limit for 5% or less runs to not be sent by players
 

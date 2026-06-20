@@ -954,52 +954,43 @@ Result<std::tuple<int, int, int>> data::splitDate(std::string date){
     return Ok(std::make_tuple(day, month, year));
 }
 
-int data::getKey() {
+uint64_t data::getKey() {
     using namespace std::chrono;
     auto now = system_clock::now();
-    long long a = time_point_cast<seconds>(now).time_since_epoch().count();
-    a = a / 100;
+    uint64_t a = time_point_cast<seconds>(now).time_since_epoch().count();
+    a = a / 600;
     return a;
 }
 
 std::vector<unsigned char> data::base64Decode(const std::string& input) {
     std::vector<unsigned char> decodedBytes;
-    decodedBytes.reserve((input.length() / 4) * 3);
-    uint32_t temp = 0;
-    auto it = input.begin();
-
-    while (it < input.end()) {
-        for (size_t i = 0; i < 4; ++i) {
-            temp <<= 6;
-            if (*it >= 'A' && *it <= 'Z') temp |= *it - 'A';
-            else if (*it >= 'a' && *it <= 'z') temp |= *it - 'a' + 26;
-            else if (*it >= '0' && *it <= '9') temp |= *it - '0' + 52;
-            else if (*it == '+') temp |= 62;
-            else if (*it == '/') temp |= 63;
-            else if (*it == '=') {
-                switch (input.end() - it) {
-                    case 1:
-                        decodedBytes.push_back((temp >> 16) & 0x000000FF);
-                        decodedBytes.push_back((temp >> 8 ) & 0x000000FF);
-                        return decodedBytes;
-                    case 2:
-                        decodedBytes.push_back((temp >> 10) & 0x000000FF);
-                        return decodedBytes;
-                }
-            }
-            ++it;
-        }
-        decodedBytes.push_back((temp >> 16) & 0x000000FF);
-        decodedBytes.push_back((temp >> 8 ) & 0x000000FF);
-        decodedBytes.push_back((temp      ) & 0x000000FF);
+    
+    std::vector<int> T(256, -1);
+    for (int i = 0; i < 64; i++) {
+        T["ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[i]] = i;
     }
 
+    int val = 0;
+    int valb = -8;
+    
+    for (unsigned char c : input) {
+        if (T[c] == -1) break;
+        
+        val = ((val << 6) & 0xFFFFFF) + T[c];
+        valb += 6;
+        
+        if (valb >= 0) {
+            decodedBytes.push_back(static_cast<unsigned char>((val >> valb) & 0xFF));
+            valb -= 8;
+        }
+    }
+    
     return decodedBytes;
 }
 
 // Function to decrypt a string
 std::string data::decryptString(const std::string& encryptedInput) {
-    int key = getKey();
+    uint64_t key = getKey();
     std::vector<unsigned char> encryptedBytes = base64Decode(encryptedInput);
 
     for (size_t i = 0; i < encryptedBytes.size(); ++i) {
@@ -1376,5 +1367,7 @@ void data::disable2point1Percent(GJGameLevel* level){
 }
 
 void data::sendError(std::string err){
-    Notification::create(err, nullptr)->show();
+    geode::queueInMainThread([err](){
+        Notification::create(err, nullptr)->show();
+    });
 }

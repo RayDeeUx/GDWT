@@ -5,11 +5,6 @@
 bool GDWTMenuLayer::init() {
 	if (!MenuLayer::init()) return false;
 
-	async::spawn(data::getPlayersData());
-	async::spawn(data::getTeamsData());
-	async::spawn(data::getMatchesData());
-	async::spawn(data::getMatchGroupsData());
-
 	auto BMenu = this->getChildByID("bottom-menu");
 
     auto GDWTButtonSprite = CCSprite::create("GDTW-Button.png"_spr);

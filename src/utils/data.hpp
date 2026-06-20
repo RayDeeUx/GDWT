@@ -479,7 +479,7 @@ class data {
 
         static std::tuple<int, int, int> lastLevelProgress;
 
-        static int getKey();
+        static uint64_t getKey();
         static std::vector<unsigned char> base64Decode(const std::string& input);
         static std::string decryptString(const std::string& encryptedInput);
 };
