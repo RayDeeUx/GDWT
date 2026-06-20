@@ -1122,10 +1122,7 @@ Result<> data::joinMatch(std::string joinCode){
                     data::checkConnectionComplete("Incorrect code! " + json.unwrap().dump());
 
                 discordWebhookSecret = val;
-                discordConnectionCheck = true;
-                if (data::getSmallRunsAllowed()){
-                    geode::Notification::create("Match allows small runs!", NotificationIcon::Success, 4)->show();
-                }
+                discordConnectionCheck = true; 
 
                 data::checkConnectionComplete();
             });
