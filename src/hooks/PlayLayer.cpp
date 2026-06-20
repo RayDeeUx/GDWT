@@ -16,8 +16,8 @@ void GDWTPlayLayer::destroyPlayer(PlayerObject* player, GameObject* p1){
 
     if (!(m_fields->currentRunStartprecent == 0 && !m_isPracticeMode)) return;
     if (this->m_level->m_levelID == 0) return;
-
-    if (percent <= 5) return;
+    
+    if (percent <= 5 && !data::getSmallRunsAllowed()) return;
 
     sendProgressMessage(percent, this->m_level, combo);
 }
@@ -49,13 +49,6 @@ void GDWTPlayLayer::levelComplete() {
 }
 
 void GDWTPlayLayer::sendProgressMessage(int precent, GJGameLevel* level, int combo){
-    if (data::getCBF()){
-        m_fields->notifCBF = geode::Notification::create("Message was not sent! you have CBF on! please disable it!", nullptr, 3);
-        m_fields->notifCBF->show();
-
-        return;
-    }
-
     auto embed = data::embedWithPlayerColor();
 
     DiscordMessage message{};

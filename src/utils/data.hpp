@@ -428,8 +428,7 @@ class data {
         static arc::Future<Result<std::string>> refreshAccessToken(std::string clientId, std::string clientSecret, std::string refreshToken);
         static arc::Future<Result<>> writeToGoogleSheet(std::string spreadsheetId, std::string range, std::string value, std::string accessToken);
 
-        static bool getCBF();
-        static bool getCBFAllowed();
+        static bool getSmallRunsAllowed();
 
         static void disable2point1Percent(GJGameLevel* level);
 
@@ -468,7 +467,7 @@ class data {
         static std::string sheetsClientID;
         static std::string sheetsClientSecret;
         static std::string sheetsRefreshToken;
-        static bool CBFAllowed;
+        static bool SmallRunsAllowed;
         static std::string matchSheetID;
         static std::string matchSheetName;
         static CCPoint columnsMinMax;

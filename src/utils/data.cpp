@@ -37,7 +37,7 @@ std::string data::sheetsClientID = "";
 std::string data::sheetsClientSecret = "";
 std::string data::sheetsRefreshToken = "";
 
-bool data::CBFAllowed = false;
+bool data::SmallRunsAllowed = false;
 
 bool data::discordConnectionCheck = false;
 bool data::sheetsConnectionCheck = false;
@@ -1021,7 +1021,7 @@ void data::leaveMatch(){
     );
 
     isInMatch = false;
-    CBFAllowed = false;
+    SmallRunsAllowed = false;
     sheetsConnectionCheck = false;
     discordConnectionCheck = false;
     discordWebhookSecret = "";
@@ -1046,18 +1046,18 @@ Result<> data::joinMatch(std::string joinCode){
 
     std::string val = fmt::format("{}/{}", secrets[0], secrets[1]);
 
-    std::string stringForCBF = secrets[2];
+    std::string stringForSmallRuns = secrets[2];
     
-    auto numForCBF = utils::numFromString<int>(stringForCBF).unwrapOr(-1);
+    auto numForSmallRuns = utils::numFromString<int>(stringForSmallRuns).unwrapOr(-1);
 
-    if (numForCBF == -1){
+    if (numForSmallRuns == -1){
         return Err("Invalid code!");
     }
-    else if (numForCBF == 0){
-        CBFAllowed = false;
+    else if (numForSmallRuns == 0){
+        SmallRunsAllowed = false;
     }
     else{
-        CBFAllowed = true;
+        SmallRunsAllowed = true;
     }
 
     sheetsClientID = secrets[3];
@@ -1123,11 +1123,8 @@ Result<> data::joinMatch(std::string joinCode){
 
                 discordWebhookSecret = val;
                 discordConnectionCheck = true;
-                if (data::getCBF()){
-                    geode::Notification::create("You have CBF on! please disable it!", nullptr, 4)->show();
-                }
-                else if (data::getCBFAllowed()){
-                    geode::Notification::create("CBF is allowed this match :D", nullptr, 4)->show();
+                if (data::getSmallRunsAllowed()){
+                    geode::Notification::create("Match allows small runs!", NotificationIcon::Success, 4)->show();
                 }
 
                 data::checkConnectionComplete();
@@ -1310,27 +1307,8 @@ arc::Future<Result<>> data::SendSheetProgress(std::string message){
     co_return Err("Not part of match!");
 }
 
-bool data::getCBF(){
-    if (getCBFAllowed()) return false;
-
-    if (auto cbf = Loader::get()->getLoadedMod("syzzi.click_between_frames")){
-        if (!cbf->isOrWillBeEnabled())
-            return false;
-
-        if (cbf->getSettingValue<bool>("soft-toggle"))
-            return false;
-
-        if (cbf->getSettingValue<bool>("click-on-steps"))
-            return false;
-
-        return true;
-    }
-
-    return false;
-}
-
-bool data::getCBFAllowed(){
-    return CBFAllowed;
+bool data::getSmallRunsAllowed(){
+    return SmallRunsAllowed;
 }
 
 void data::disable2point1Percent(GJGameLevel* level){
