@@ -339,7 +339,7 @@ void GDWTProfilePage::isUserInBadge(const std::string& badgeID, const int& accou
         }
 
         alpha::badgify::showBadge(badge, spr);
-    }).leak();
+    });
 }
 
 $on_mod(Loaded) {
