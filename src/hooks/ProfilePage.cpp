@@ -312,9 +312,9 @@ void GDWTProfilePage::onBadgeClicked(CCObject* sender){
 }
 */
 
-static void GDWTProfilePage::isUserInBadge(const std::string& badgeID, const int& accountID, const alpha::badgify::Badge& badge, CCSprite* spr) {
+void GDWTProfilePage::isUserInBadge(const std::string& badgeID, const int& accountID, const alpha::badgify::Badge& badge, CCSprite* spr) {
     bool found = false;
-    data::getPlayersData().listen([&found, badgeID, accountID, badge] (Result<std::vector<PlayerData>>* playersData) {
+    data::getPlayersData().listen([&found, badgeID, accountID, badge, spr] (Result<std::vector<PlayerData>>* playersData) {
         auto playerData = playersData->unwrapOrDefault();
         if (playerData.empty()) {
             return;
