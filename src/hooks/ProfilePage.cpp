@@ -338,7 +338,9 @@ void GDWTProfilePage::isUserInBadge(const std::string& badgeID, const int& accou
             return;
         }
 
-        alpha::badgify::showBadge(badge, spr);
+        Loader::get()->queueInMainThread([badge, spr]() {
+            alpha::badgify::showBadge(badge, spr);
+        });
     });
 }
 
