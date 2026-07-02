@@ -8,12 +8,10 @@ using namespace geode::prelude;
 #include <alphalaneous.badgify/include/Badgify.hpp>
 
 class $modify(GDWTProfilePage, ProfilePage) {
-    /*
     struct Fields{
         async::TaskHolder<PlayerDataFuture::Output> playerDataListener;
-        std::unordered_map<CCObject*, std::pair<std::string, std::string>> allBadges;
+        // std::unordered_map<CCObject*, std::pair<std::string, std::string>> allBadges;
     };
-    */
 
     public:
         /*
