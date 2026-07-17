@@ -312,7 +312,7 @@ void GDWTProfilePage::onBadgeClicked(CCObject* sender){
 }
 */
 
-void GDWTProfilePage::isUserInBadge(const std::string& badgeID, const int& accountID, const alpha::badgify::Badge& badge, CCSprite* sprite) {
+void GDWTProfilePage::isUserInBadge(std::string badgeID, int accountID, alpha::badgify::Badge badge, CCSprite* sprite) {
     async::spawn(data::getPlayersData(), [badgeID, accountID, badge, spr = geode::Ref(sprite)](Result<std::vector<PlayerData>> playersData) {
         auto playerData = playersData.unwrapOrDefault();
         if (playerData.empty()) {

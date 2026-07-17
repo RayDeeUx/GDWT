@@ -24,5 +24,5 @@ class $modify(GDWTProfilePage, ProfilePage) {
         void onBadgeClicked(CCObject* sender);
         */
 
-        static void isUserInBadge(const std::string& badgeID, const int& accountID, const alpha::badgify::Badge& badge, CCSprite* sprite);
+        static void isUserInBadge(std::string badgeID, int accountID, alpha::badgify::Badge badge, CCSprite* sprite);
 };
